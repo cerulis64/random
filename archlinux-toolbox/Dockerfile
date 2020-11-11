@@ -6,11 +6,17 @@ LABEL com.github.containers.toolbox="true" \
       version="latest" \
       usage="archlinux image compatible with toolbox"
 
-RUN touch /etc/machine-id
+# optimize mirrors
+RUN pacman --noconfirm -Syu reflector
+RUN reflector --latest 200 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
+# install packages
+RUN pacman --noconfirm -S base sudo base-devel grml-zsh-config kitty-terminfo reflector
+
+RUN touch /etc/machine-id
 RUN mkdir /media
 
-RUN pacman --noconfirm -Syu base sudo
+# configure sudo
 RUN echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
-CMD /bin/sh
+CMD /bin/zsh
