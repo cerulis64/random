@@ -11,7 +11,7 @@ RUN pacman --noconfirm -Syu reflector
 RUN reflector --latest 200 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
 # install packages
-RUN pacman --noconfirm -S base sudo base-devel grml-zsh-config kitty-terminfo reflector
+RUN pacman --noconfirm -S base sudo base-devel grml-zsh-config kitty-terminfo
 
 RUN touch /etc/machine-id
 RUN mkdir /media
